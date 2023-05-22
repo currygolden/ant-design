@@ -15,6 +15,7 @@ import ErrorBoundary from './ErrorBoundary';
 // CSSINJS
 import useStyle from './style';
 
+// 定义组件入参，一定的约束性
 export interface AlertProps {
   /** Type of Alert styles, options:`success`, `info`, `warning`, `error` */
   type?: 'success' | 'info' | 'warning' | 'error';
@@ -61,7 +62,8 @@ interface IconNodeProps {
   description: AlertProps['description'];
 }
 
-const IconNode: React.FC<IconNodeProps> = (props) => {
+// 确定icon类型
+const IconNode: React.FC<IconNodeProps> = (props: IconNodeProps) => {
   const { icon, prefixCls, type } = props;
   const iconType = iconMapFilled[type!] || null;
   if (icon) {
@@ -95,6 +97,9 @@ type CompoundedComponent = React.FC<AlertProps> & {
   ErrorBoundary: typeof ErrorBoundary;
 };
 
+/**
+ * ...arguments
+ */
 const Alert: CompoundedComponent = ({
   description,
   prefixCls: customizePrefixCls,
@@ -113,6 +118,7 @@ const Alert: CompoundedComponent = ({
   action,
   ...props
 }) => {
+  // 组件本身持有状态
   const [closed, setClosed] = React.useState(false);
 
   const ref = React.useRef<HTMLElement>();

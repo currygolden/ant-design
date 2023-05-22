@@ -86,7 +86,7 @@ const InternalButton: React.ForwardRefRenderFunction<
     htmlType = 'button',
     ...rest
   } = props;
-
+  // 使用context的场景
   const { getPrefixCls, autoInsertSpaceInButton, direction } = React.useContext(ConfigContext);
   const prefixCls = getPrefixCls('btn', customizePrefixCls);
 

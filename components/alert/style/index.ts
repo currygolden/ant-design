@@ -228,6 +228,7 @@ export const genAlertStyle: GenerateStyle<AlertToken> = (token: AlertToken): CSS
   genActionStyle(token),
 ];
 
+// 自定义hook
 export default genComponentStyleHook('Alert', (token) => {
   const { fontSizeHeading3 } = token;
 

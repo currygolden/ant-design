@@ -155,9 +155,18 @@ export interface TreeProps<T extends BasicDataNode = DataNode>
   children?: React.ReactNode;
   blockNode?: boolean;
 }
-
+/**
+ * 1.forwardRef 决定了泛型顺序，实际的类型在调用函数时确定,这个函数本身是高阶函数，实现特定的包装逻辑
+ *    1.1 历史的高阶组件存在无意义的dom节点嵌套
+ *    1.2 泛型顺序看函数签名
+ * 2.ref 可以用来访问组件实例，获取dom的引用
+ * 3.一些需要进行耗时运算的变量或函数，可以通过 useMemo 来避免重复计算，提高渲染和组件性能的效率
+ *    3.1 通过 props 传递给子组件使用的情况，可以使用 useMemo 进行缓存，避免 props 发生变化时，父组件重复渲染带来的性能问题。
+ * 4.这个组件来自于rcTree,本身看起来是一个容器组件
+ */
 const Tree = React.forwardRef<RcTree, TreeProps>((props, ref) => {
   const { getPrefixCls, direction, virtual } = React.useContext(ConfigContext);
+  // 解构参数，提供默认值，赋值变量
   const {
     prefixCls: customizePrefixCls,
     className,
@@ -179,7 +188,7 @@ const Tree = React.forwardRef<RcTree, TreeProps>((props, ref) => {
     ...initCollapseMotion(rootPrefixCls),
     motionAppear: false,
   };
-
+  // 拓展了输入属性
   const newProps = {
     ...props,
     checkable,
